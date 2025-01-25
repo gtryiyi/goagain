@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyFangs Application</title>
+    
+</head>
+
+<body class="whitelabel">
+    
+<div class="min-h-screen flex flex-col">
+    <div class="container mx-auto px-2 flex-1 h-full mt-4 mb-8 friz">
+        <div class="hero min-h-[50vh]">
+            <div class="hero-content text-center">
+                <div class="max-w-lg">
+                    <h1 class="text-5xl font-bold">OnlyFangs Application</h1>
+                    <p class="py-6">
+                        To apply for OnlyFangs, first link your twitch then discord account, then enter your email and hit submit.
+                    </p>
+                    <div class="flex justify-center mt-8">
+                        <div class="card bg-base-200 md:w-[32rem] shadow-xl">
+                            <div class="card-body">
+                                <!-- <h2 class="card-title">Card title!</h2> -->
+                                <div class="grid grid-cols-2 gap-3">
+                                    <h2 class="text-xl">Step 1</h2>
+                                    <h2 class="text-xl">Step 2</h2>
+                                    
+                                    <a class="btn btn-active btn-lg" href="/twitch/login">Connect Twitch</a>
+                                    
+
+                                    
+                                        
+                                        <button class="btn btn-active btn-lg" disabled>Connect Discord</button>
+                                        
+                                    
+
+
+                                    <form id="apply-form" class="col-span-2">
+                                        <div class="mb-3 flex flex-col gap-3">
+                                            <label for="email" class="input input-lg input-bordered flex items-center gap-2">
+                                                Email
+                                                
+                                                
+                                                <input id="email" name="email" type="email" class="grow" disabled />
+                                                
+                                                
+                                            </label>
+                                            
+                                                
+                                                <textarea id="details" name="details" class="textarea textarea-bordered textarea-lg w-full" maxlength="500" placeholder="Anything you want to add?" disabled></textarea>
+                                                
+                                            
+                                        </div>
+
+                                        
+                                            <button id="submit-btn" type="submit" class="btn btn-active btn-lg" disabled>Submit</button>
+                                            <p id="error-message" class="text-error hidden mt-3">Submission failed. Please try again.</p>
+                                        
+                                    </form>
+
+                                    <script>
+                                        const emailInput = document.getElementById('email');
+                                        const submitButton = document.getElementById('submit-btn');
+                                        const errorMessage = document.getElementById('error-message');
+                                        const form = document.getElementById('apply-form');
+
+                                        emailInput.addEventListener('input', () => {
+                                            // Enable the button only if the input has a valid email
+                                            if (emailInput.validity.valid && emailInput.value.trim() !== '') {
+                                                submitButton.disabled = false;
+                                            } else {
+                                                submitButton.disabled = true;
+                                            }
+                                        });
+
+                                        // Handle form submission
+                                        form.addEventListener('submit', async (event) => {
+                                            event.preventDefault(); // Prevent the default form submission
+                                            submitButton.disabled = true; // Disable the button during submission
+                                            errorMessage.classList.add('hidden'); // Hide the error message
+
+                                            try {
+                                                const response = await submit_form(new FormData(form)); // Replace this with an actual API call
+                                                if (!response.ok) {
+                                                    throw new Error('Failed to submit');
+                                                } else {
+                                                    window.location.reload(); // Reload the page after submission
+                                                }
+                                            } catch (error) {
+                                                console.error(error);
+                                                errorMessage.classList.remove('hidden'); // Show the error message
+                                            } finally {
+                                                submitButton.disabled = false; // Re-enable the button after submission
+                                            }
+                                        });
+
+                                        async function submit_form(formData) {
+                                            const response = await fetch('/apply', {
+                                                method: 'POST',
+                                                body: formData,
+                                            });
+
+                                            if (!response.ok) {
+                                                throw new Error('Failed to submit');
+                                            }
+
+                                            return response;
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content friz">
+        <aside>
+            <p>© 2024 - springwhisper</p>
+        </aside>
+    </footer>
+</div>
+
+
+</body>
+
+</html>
