@@ -9,11 +9,11 @@ const PORT = 3000;
 
 const TWITCH_CLIENT_ID = process.env.TWITCH_CLIENT_ID;
 const TWITCH_CLIENT_SECRET = process.env.TWITCH_CLIENT_SECRET;
-const TWITCH_REDIRECT_URI = 'http://localhost:3000/twitch/callback';
+const TWITCH_REDIRECT_URI = 'https://goagain.vercel.app/twitch/callback';
 
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
-const DISCORD_REDIRECT_URI = 'http://localhost:3000/discord/callback';
+const DISCORD_REDIRECT_URI = 'https://goagain.vercel.app/discord/callback';
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
